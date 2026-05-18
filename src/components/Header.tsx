@@ -23,9 +23,13 @@ const Header = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "glass-card !bg-background/70 !rounded-none border-b border-white/5" : "bg-transparent"
-      }`}>
+    <header
+  className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+    isScrolled
+      ? "border-b border-black/5 bg-white/70 shadow-[0_4px_30px_rgba(0,0,0,0.03)] backdrop-blur-xl"
+      : "bg-transparent"
+  }`}
+>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <div className="flex items-center gap-3">
