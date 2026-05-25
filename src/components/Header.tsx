@@ -15,11 +15,11 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { name: "Products", href: "#" },
-    { name: "Solutions", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Company", href: "#" },
+    { name: "About", href: "about"},
+    { name: "Products", href: "product" },
+    { name: "Solutions", href: "solutions" },
+    { name: "Pricing", href: "pricing" },
+    { name: "Company", href: "company" },
   ];
 
   return (
@@ -37,9 +37,9 @@ const Header = () => {
 
           <div className="hidden sm:block">
             <h1 className="text-md font-bold">
-              Altrex Digital Platforms Pvt Ltd
+              Altrex
             </h1>
-            <p className="text-xs text-gray-500">Realtime Messaging Platform</p>
+            <p className="text-xs text-gray-500">Altrex Digital Platforms Pvt Ltd</p>
           </div>
         </div>
 

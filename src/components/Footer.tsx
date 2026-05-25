@@ -17,10 +17,10 @@ const Footer = () => {
 
               <div className="hidden sm:block">
                 <h1 className="text-md font-bold">
-                  Altrex Digital Platforms Pvt Ltd
+                  Altrex
                 </h1>
                 <p className="text-xs text-gray-500">
-                  Realtime Messaging Platform
+                  Altrex Digital Platforms Pvt Ltd
                 </p>
               </div>
             </div>
