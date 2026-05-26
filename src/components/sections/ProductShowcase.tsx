@@ -13,10 +13,14 @@ import {
   Wifi,
   Zap,
 } from "lucide-react";
+
+import { motion, type Variants } from "framer-motion";
+
 import { Badge } from "../ui/badge";
 
 const barHeights = [38, 52, 70, 48, 82, 60, 110, 88, 130, 100, 150, 120];
 const linePoints = [38, 52, 70, 48, 82, 60, 110, 88, 130, 100, 150, 120];
+
 const maxH = Math.max(...linePoints);
 
 const toSvgPolyline = (heights: number[], max: number, h: number) =>
@@ -25,6 +29,31 @@ const toSvgPolyline = (heights: number[], max: number, h: number) =>
     .join(" ");
 
 const svgPoints = toSvgPolyline(linePoints, maxH, 120);
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const fadeUpVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+
+  visible: {
+    opacity: 1,
+    y: 0,
+
+    transition: {
+      duration: 0.7,
+    },
+  },
+};
 
 const ProductShowcase = () => {
   return (
@@ -35,53 +64,82 @@ const ProductShowcase = () => {
         <div className="absolute bottom-0 left-0 h-[350px] w-[350px] rounded-full bg-fuchsia-100/40 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="mx-auto max-w-7xl px-6 lg:px-8"
+      >
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
-          <Badge
-            variant="secondary"
-            className="border border-violet-200 bg-violet-50 p-4 text-sm font-medium text-violet-700"
-          >
-            Product Showcase
-          </Badge>
+          <motion.div variants={fadeUpVariants}>
+            <Badge
+              variant="secondary"
+              className="border border-violet-200 bg-violet-50 p-4 text-sm font-medium text-violet-700"
+            >
+              Product Showcase
+            </Badge>
+          </motion.div>
 
-          <h2 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          <motion.h2
+            variants={fadeUpVariants}
+            className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+          >
             Monitor Everything
             <span className="block bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
               In Realtime
             </span>
-          </h2>
+          </motion.h2>
 
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <motion.p
+            variants={fadeUpVariants}
+            className="mt-6 text-lg leading-8 text-gray-600"
+          >
             Gain complete visibility into messaging infrastructure, connected
             devices, and realtime performance through a modern analytics
             dashboard.
-          </p>
+          </motion.p>
         </div>
 
         {/* Dashboard */}
-        <div className="relative mt-20">
+        <motion.div
+          variants={fadeUpVariants}
+          className="relative mt-20"
+        >
           {/* Ambient glow */}
           <div className="absolute -inset-4 rounded-[44px] bg-gradient-to-br from-violet-200/40 via-fuchsia-100/30 to-cyan-100/30 blur-3xl" />
 
           {/* Browser Chrome */}
-          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.12)]">
+          <motion.div
+            whileHover={{
+              y: -4,
+            }}
+            transition={{
+              duration: 0.25,
+            }}
+            className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.12)]"
+          >
             {/* Browser Topbar */}
             <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-5 py-3">
               <div className="flex items-center gap-2">
                 <div className="h-3 w-3 rounded-full bg-red-400" />
                 <div className="h-3 w-3 rounded-full bg-yellow-400" />
                 <div className="h-3 w-3 rounded-full bg-green-400" />
+
                 <div className="ml-4 flex items-center gap-2 rounded-lg bg-white border border-gray-200 px-4 py-1 text-xs text-gray-500">
                   <span className="h-2 w-2 rounded-full bg-gray-300" />
                   dashboard.altrex.dev
                 </div>
               </div>
+
               <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-1">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
                 </span>
+
                 <span className="text-xs font-medium text-green-700">
                   All Systems Operational
                 </span>
@@ -90,12 +148,18 @@ const ProductShowcase = () => {
 
             {/* Dashboard Layout: Sidebar + Main */}
             <div className="flex h-[600px] overflow-hidden">
-              {/* ── Sidebar ── */}
+              {/* Sidebar */}
               <div className="flex w-16 flex-shrink-0 flex-col items-center gap-6 border-r border-gray-100 bg-gray-50 py-5">
                 {/* Logo */}
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 shadow-md shadow-violet-300">
+                <motion.div
+                  whileHover={{
+                    scale: 1.08,
+                    rotate: 5,
+                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 shadow-md shadow-violet-300"
+                >
                   <Zap className="h-4 w-4 text-white" />
-                </div>
+                </motion.div>
 
                 {/* Nav */}
                 <div className="mt-2 flex flex-col gap-4">
@@ -107,8 +171,11 @@ const ProductShowcase = () => {
                     { icon: ShieldCheck, active: false },
                     { icon: Settings, active: false },
                   ].map(({ icon: Icon, active }, i) => (
-                    <div
+                    <motion.div
                       key={i}
+                      whileHover={{
+                        scale: 1.08,
+                      }}
                       className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 ${
                         active
                           ? "bg-violet-100 text-violet-600 shadow-sm"
@@ -116,26 +183,32 @@ const ProductShowcase = () => {
                       }`}
                     >
                       <Icon className="h-4 w-4" />
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* ── Main Content ── */}
+              {/* Main Content */}
               <div className="flex flex-1 flex-col overflow-hidden bg-gray-50/50">
                 {/* Inner Topbar */}
                 <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-100 bg-white px-6 py-3">
                   <div>
-                    <p className="text-[11px] text-gray-400">Welcome back</p>
+                    <p className="text-[11px] text-gray-400">
+                      Welcome back
+                    </p>
+
                     <h3 className="text-sm font-semibold text-gray-900">
                       Altrex Dashboard
                     </h3>
                   </div>
+
                   <div className="flex items-center gap-3">
                     <div className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500">
                       <Bell className="h-4 w-4" />
+
                       <div className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-violet-500" />
                     </div>
+
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 text-xs font-bold text-white">
                       A
                     </div>
@@ -144,7 +217,7 @@ const ProductShowcase = () => {
 
                 {/* Body */}
                 <div className="flex flex-1 gap-5 overflow-hidden p-5">
-                  {/* ── Left Column ── */}
+                  {/* Left Column */}
                   <div className="flex min-w-0 flex-1 flex-col gap-5">
                     {/* Stat Cards */}
                     <div className="grid grid-cols-3 gap-4">
@@ -197,8 +270,14 @@ const ProductShowcase = () => {
                           },
                           i,
                         ) => (
-                          <div
+                          <motion.div
                             key={i}
+                            whileHover={{
+                              y: -6,
+                            }}
+                            transition={{
+                              duration: 0.25,
+                            }}
                             className={`relative overflow-hidden rounded-xl border ${border} ${cardBg} p-4`}
                           >
                             <div className="flex items-start justify-between">
@@ -207,44 +286,61 @@ const ProductShowcase = () => {
                               >
                                 <Icon className="h-4 w-4" />
                               </div>
+
                               <Badge
                                 variant="outline"
                                 className="bg-white text-green-700 font-semibold"
                               >
                                 {change}
+
                                 <ArrowUpRight className="h-3 w-3" />
                               </Badge>
                             </div>
+
                             <p className="mt-4 text-2xl font-bold text-gray-900">
                               {value}
                             </p>
+
                             <p className="mt-0.5 text-xs text-gray-500">
                               {label}
                             </p>
+
                             <div
                               className={`pointer-events-none absolute -bottom-5 -right-5 h-20 w-20 rounded-full ${blob} opacity-10 blur-2xl`}
                             />
-                          </div>
+                          </motion.div>
                         ),
                       )}
                     </div>
 
                     {/* Chart Panel */}
-                    <div className="flex flex-1 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                    <motion.div
+                      whileHover={{
+                        y: -4,
+                      }}
+                      transition={{
+                        duration: 0.25,
+                      }}
+                      className="flex flex-1 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+                    >
                       <div className="flex items-center justify-between">
                         <div>
                           <h4 className="text-sm font-semibold text-gray-900">
                             Message Throughput
                           </h4>
+
                           <p className="mt-0.5 text-xs text-gray-500">
                             Live infrastructure analytics
                           </p>
                         </div>
+
                         <div className="flex items-center gap-3">
                           <div className="flex items-center gap-1.5 text-xs font-medium text-violet-600">
                             <TrendingUp className="h-3 w-3" />
+
                             <span>+18% this week</span>
                           </div>
+
                           <div className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-600">
                             24h
                           </div>
@@ -266,7 +362,7 @@ const ProductShowcase = () => {
                           ))}
                         </div>
 
-                        {/* SVG: gradient fill + smooth line */}
+                        {/* SVG */}
                         <svg
                           className="absolute inset-0 h-[calc(100%-20px)] w-full"
                           preserveAspectRatio="none"
@@ -276,7 +372,17 @@ const ProductShowcase = () => {
                             points={`0,120 ${svgPoints} 100,120`}
                             fill="url(#fillGrad)"
                           />
-                          <polyline
+
+                          <motion.polyline
+                            initial={{
+                              pathLength: 0,
+                            }}
+                            whileInView={{
+                              pathLength: 1,
+                            }}
+                            transition={{
+                              duration: 2,
+                            }}
                             points={svgPoints}
                             fill="none"
                             stroke="url(#strokeGrad)"
@@ -289,10 +395,19 @@ const ProductShowcase = () => {
                         {/* Bar chart layer */}
                         <div className="absolute bottom-5 left-0 right-0 flex items-end gap-1.5">
                           {barHeights.map((h, i) => (
-                            <div
+                            <motion.div
                               key={i}
+                              initial={{
+                                height: 0,
+                              }}
+                              whileInView={{
+                                height: `${(h / maxH) * 110}px`,
+                              }}
+                              transition={{
+                                duration: 0.5,
+                                delay: i * 0.05,
+                              }}
                               className="flex-1 rounded-t bg-gradient-to-t from-violet-400 to-fuchsia-300"
-                              style={{ height: `${(h / maxH) * 110}px` }}
                             />
                           ))}
                         </div>
@@ -317,136 +432,14 @@ const ProductShowcase = () => {
                           ))}
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* ── Right Column ── */}
-                  <div className="flex w-52 flex-shrink-0 flex-col gap-5">
-                    {/* System Status */}
-                    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                      <h4 className="text-sm font-semibold text-gray-900">
-                        System Status
-                      </h4>
-                      <div className="mt-4 space-y-3">
-                        {[
-                          {
-                            icon: ShieldCheck,
-                            label: "API Gateway",
-                            uptime: 99.9,
-                            barColor: "bg-green-500",
-                          },
-                          {
-                            icon: Cpu,
-                            label: "MQTT Broker",
-                            uptime: 98.4,
-                            barColor: "bg-green-500",
-                          },
-                          {
-                            icon: Activity,
-                            label: "Realtime Engine",
-                            uptime: 99.7,
-                            barColor: "bg-green-500",
-                          },
-                          {
-                            icon: Wifi,
-                            label: "WebSocket Hub",
-                            uptime: 97.1,
-                            barColor: "bg-yellow-400",
-                          },
-                        ].map(({ icon: Icon, label, uptime, barColor }, i) => (
-                          <div key={i} className="space-y-1.5">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gray-100">
-                                  <Icon className="h-3 w-3 text-gray-600" />
-                                </div>
-                                <span className="text-xs text-gray-700">
-                                  {label}
-                                </span>
-                              </div>
-                              <span className="text-[10px] font-semibold text-gray-500">
-                                {uptime}%
-                              </span>
-                            </div>
-                            <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
-                              <div
-                                className={`h-full rounded-full ${barColor}`}
-                                style={{ width: `${uptime}%` }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Live Events */}
-                    <div className="flex flex-1 flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-semibold text-gray-900">
-                          Live Events
-                        </h4>
-                        <div className="flex items-center gap-1 text-[10px] font-medium text-violet-600">
-                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-500" />
-                          Live
-                        </div>
-                      </div>
-
-                      <div className="mt-3 flex-1 space-y-3 overflow-hidden">
-                        {[
-                          {
-                            msg: "MQTT client connected",
-                            time: "0s ago",
-                            dot: "bg-violet-500",
-                          },
-                          {
-                            msg: "Node sync complete",
-                            time: "2s ago",
-                            dot: "bg-green-500",
-                          },
-                          {
-                            msg: "Stream updated",
-                            time: "5s ago",
-                            dot: "bg-cyan-500",
-                          },
-                          {
-                            msg: "Auth verified",
-                            time: "8s ago",
-                            dot: "bg-fuchsia-500",
-                          },
-                          {
-                            msg: "Cluster scaled up",
-                            time: "12s ago",
-                            dot: "bg-yellow-500",
-                          },
-                          {
-                            msg: "Snapshot persisted",
-                            time: "18s ago",
-                            dot: "bg-blue-500",
-                          },
-                        ].map(({ msg, time, dot }, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <div
-                              className={`mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full ${dot}`}
-                            />
-                            <div className="min-w-0">
-                              <p className="truncate text-xs text-gray-700">
-                                {msg}
-                              </p>
-                              <span className="text-[10px] text-gray-400">
-                                {time}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
