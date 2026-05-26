@@ -139,25 +139,6 @@ const headerVariants: Variants = {
   },
 };
 
-const canvasVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 48,
-    scale: 0.98,
-  },
-
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-
-    transition: {
-      duration: 0.7,
-      delay: 0.15,
-    },
-  },
-};
-
 /* ─── Flow CSS ───────────────────────────────────────────────────────────── */
 
 function useFlowStyles() {
@@ -277,25 +258,14 @@ function ItemNode({ data }: NodeProps<any>) {
   const color = (data.color as string) ?? C.violet;
 
   return (
-    <motion.div
-      whileHover={{
-        y: -2,
-        scale: 1.02,
-      }}
-      transition={{
-        duration: 0.2,
-      }}
+    <div
       className="flex min-w-[180px] items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 transition-all duration-200"
       style={{
         border: `1px solid ${color}28`,
         boxShadow: `0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px ${color}08`,
       }}
     >
-      <motion.div
-        whileHover={{
-          rotate: 4,
-          scale: 1.08,
-        }}
+      <div
         className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[10px]"
         style={{
           background: `${color}12`,
@@ -303,7 +273,7 @@ function ItemNode({ data }: NodeProps<any>) {
         }}
       >
         {Icon && <Icon size={14} color={color} strokeWidth={1.8} />}
-      </motion.div>
+      </div>
 
       <span className="text-xs font-semibold text-gray-700">{data.label}</span>
 
@@ -317,7 +287,7 @@ function ItemNode({ data }: NodeProps<any>) {
         style={{ opacity: 0 }}
         id="top"
       />
-    </motion.div>
+    </div>
   );
 }
 
@@ -327,13 +297,7 @@ function BlockNode({ data }: NodeProps<any>) {
   const color = (data.color as string) ?? C.violet;
 
   return (
-    <motion.div
-      whileHover={{
-        y: -3,
-      }}
-      transition={{
-        duration: 0.2,
-      }}
+    <div
       className="rounded-[20px] bg-white p-[18px]"
       style={{
         width: data.width ?? 240,
@@ -352,11 +316,8 @@ function BlockNode({ data }: NodeProps<any>) {
       {data.variant === "connectivity" && (
         <div className="flex flex-col gap-[6px]">
           {(data.items as string[]).map((item, i) => (
-            <motion.div
+            <div
               key={i}
-              whileHover={{
-                scale: 1.02,
-              }}
               className="rounded-[9px] px-3 py-[6px] text-center text-[11px] font-semibold"
               style={{
                 color,
@@ -365,7 +326,7 @@ function BlockNode({ data }: NodeProps<any>) {
               }}
             >
               {item}
-            </motion.div>
+            </div>
           ))}
         </div>
       )}
@@ -376,18 +337,11 @@ function BlockNode({ data }: NodeProps<any>) {
             const Icon = item.icon;
 
             return (
-              <motion.div
+              <div
                 key={i}
-                whileHover={{
-                  y: -2,
-                }}
                 className="flex flex-col items-center gap-[6px] rounded-[12px] border border-violet-100 bg-violet-50/60 px-2 py-2.5"
               >
-                <motion.div
-                  whileHover={{
-                    scale: 1.08,
-                    rotate: 4,
-                  }}
+                <div
                   className="flex h-[28px] w-[28px] items-center justify-center rounded-lg"
                   style={{
                     background: `${color}12`,
@@ -395,12 +349,12 @@ function BlockNode({ data }: NodeProps<any>) {
                   }}
                 >
                   <Icon size={12} color={color} strokeWidth={1.8} />
-                </motion.div>
+                </div>
 
                 <span className="text-center text-[9px] font-semibold leading-tight text-gray-500">
                   {item.label}
                 </span>
-              </motion.div>
+              </div>
             );
           })}
         </div>
@@ -416,7 +370,7 @@ function BlockNode({ data }: NodeProps<any>) {
         style={{ opacity: 0 }}
         id="bottom"
       />
-    </motion.div>
+    </div>
   );
 }
 
@@ -679,19 +633,8 @@ function LayerLabels() {
   return (
     <div className="pointer-events-none absolute inset-x-6 top-5 z-10">
       {LAYER_LABELS.map(({ label, left, color }) => (
-        <motion.div
+        <div
           key={label}
-          initial={{
-            opacity: 0,
-            y: -10,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.4,
-          }}
           className="absolute flex items-center gap-1.5"
           style={{ left }}
         >
@@ -711,7 +654,7 @@ function LayerLabels() {
           >
             {label}
           </span>
-        </motion.div>
+        </div>
       ))}
     </div>
   );
@@ -721,14 +664,7 @@ function LayerLabels() {
 
 function LivePulse() {
   return (
-    <motion.div
-      animate={{
-        y: [0, -3, 0],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-      }}
+    <div
       className="pointer-events-none absolute bottom-5 left-5 z-10 flex items-center gap-2 rounded-full border border-emerald-200 bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur-sm"
     >
       <span className="relative flex h-2 w-2">
@@ -740,7 +676,7 @@ function LivePulse() {
       <span className="text-[10px] font-semibold text-emerald-700">
         Live Data Flow
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -830,19 +766,13 @@ const Architecture = () => {
         </motion.div>
 
         {/* Flow canvas */}
-        <motion.div
+        <div
           ref={canvasRef}
           className="relative mt-20 overflow-hidden rounded-2xl border border-violet-100 bg-violet-50/40"
           style={{
             height: 820,
             boxShadow:
               "0 0 0 1px rgba(139,92,246,0.06), 0 8px 48px rgba(139,92,246,0.08), 0 2px 16px rgba(0,0,0,0.04)",
-          }}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={canvasVariants}
-          whileHover={{
-            y: -3,
           }}
         >
           <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent" />
@@ -888,7 +818,7 @@ const Architecture = () => {
           </ReactFlow>
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );
